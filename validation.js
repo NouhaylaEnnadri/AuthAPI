@@ -4,9 +4,20 @@ const Joi = require("@hapi/joi");
 // Register validation
 const registerValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(6).required(),
+    name: Joi.string().min(6).required().max(100),
     email: Joi.string().min(6).required().email(),
-    password: Joi.string().min(8).pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%^&*])(?=.{8,})')).required(),
+    password: Joi.string()
+      .min(8)
+      .pattern(
+        new RegExp(
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%^&*])(?=.{8,})"
+        )
+      )
+      .required()
+      .messages({
+        "string.pattern.base":
+          "Password must include at least one lowercase letter, one uppercase letter, one digit, and one special character.",
+      }),
   });
 
   return schema.validate(data);
