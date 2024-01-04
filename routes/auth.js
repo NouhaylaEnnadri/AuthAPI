@@ -37,6 +37,7 @@ router.post("/register", async (req, res) => {
 });
 
 //login
+//login
 router.post("/login", async (req, res) => {
   // Let's validate the data before we create a user
   const { error } = loginValidation(req.body);
@@ -46,22 +47,22 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send("u don't belong here");
 
-  //check the password
+  // Check the password
   const validpwd = await bcrypt.compare(req.body.password, user.pwd);
-  if (!validpwd)
-    return res.status(400).send("u can't even remeber your password");
+  if (!validpwd) {
+    return res
+      .status(400)
+      .json({ message: "u can't even remember your password" });
+  }
 
-  //create and assign a token
+  // Create and assign a token
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+    expiresIn: "30s",
+  });
 
-  const token = jwt.sign(
-    {
-      _id: user._id,
-    },
-    process.env.TOKEN_SECRET,
-    { expiresIn: "50s" } // Correct property name
-  );
-
-  res.header("aut-token", token).send("u made it yahoo \n" + token);
+  // Send the token as a response header and success message
+  res.header("auth-token", token).json({ message: "Login successful" });
+  return; // Ensure the function exits after sending the response
 });
 
 module.exports = router;

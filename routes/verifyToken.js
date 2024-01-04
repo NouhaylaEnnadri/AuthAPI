@@ -12,6 +12,10 @@ module.exports = function authVerifier(req, res, next) {
     req.user = verified;
     next();
   } catch (err) {
-    res.status(400).send("Unauthorized: Uh-oh! Your secret agent token has expired or been compromised.");
+    res
+      .status(400)
+      .send(
+        "Unauthorized: Uh-oh! Your secret agent token has expired or been compromised."
+      );
   }
 };
