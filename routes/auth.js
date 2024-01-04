@@ -58,12 +58,8 @@ router.post("/login", async (req, res) => {
       _id: user._id,
     },
     process.env.TOKEN_SECRET,
-    { expiresIn: "60s" } // Correct property name
+    { expiresIn: "50s" } // Correct property name
   );
-
-  res.cookie("token", token, {
-    httpOnly: true,
-  });
 
   res.header("aut-token", token).send("u made it yahoo \n" + token);
 });
