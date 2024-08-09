@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require('cors');
+const cors = require("cors");
 
 // Import routes
 const authRoute = require("./routes/auth");
@@ -11,6 +11,7 @@ const apiLimiter = require("./routes/rateLimiting");
 // Enable CORS for all routes
 app.use(cors());
 dotenv.config();
+he;
 
 // Connect to DB
 mongoose
@@ -25,4 +26,4 @@ app.use(express.json());
 // Routes Middleware
 app.use("/api/user", authRoute);
 app.use("/api/posts", postRoute);
-app.listen(3000, () => console.log("Listening on port 3000"));
+app.listen(5000, () => console.log("Listening on port 3000"));

@@ -61,7 +61,9 @@ router.post("/login", async (req, res) => {
   });
 
   // Send the token as a response header and success message
-  res.header("auth-token", token).json({ message: "Login successful" });
+  res
+    .header("auth-token", token)
+    .json({ message: "Login successful", Token: token });
   return; // Ensure the function exits after sending the response
 });
 
